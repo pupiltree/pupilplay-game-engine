@@ -1,482 +1,321 @@
-# PupilPlay Game Engine - Comprehensive Workflow & Architecture
+# PupilPlay Game Engine - Two-Node LangGraph Architecture
 
-## Mermaid Workflow Diagram
+## PupilPlay Two-Node LangGraph Architecture
 
 ```mermaid
 graph TB
-    subgraph "External Systems"
-        PA[PupilAssess<br/>Gap Detection]
-        CE[Content Engine<br/>Single Source of Truth]
-        PL[PupilLearn/PupilTeach<br/>Delivery Platforms]
+    subgraph "External Educational Ecosystem"
+        PA[PupilAssess<br/>Gap Detection & Analysis]
+        CE[Content Engine<br/>Curriculum & Standards]
+        LMS[Learning Management<br/>Systems Integration]
     end
-
-    subgraph "Gap-to-Game Orchestrator"
-        GD[Gap Detection<br/>Input Processor]
-        GT[Game Template<br/>Selector]
-        CF[Content Fetcher<br/>Engine Interface]
+    
+    subgraph "Gap-to-Game Intelligence"
+        GD[Gap Processor<br/>Educational Analysis]
+        GT[Template Selector<br/>AI-Powered Matching]
+        CG[Config Generator<br/>YAML Assembly]
     end
-
+    
+    subgraph "🎯 LANGGRAPH TWO-NODE CORE"
+        subgraph "Node 1: Game Master"
+            GM[🧠 Game Master<br/>Educational AI Tutor]
+            MS[Model Selector<br/>Gemini Pro/Flash]
+            SP[System Prompt<br/>All Educational Logic]
+        end
+        
+        subgraph "Node 2: Game Actions"
+            GA[⚡ Game Actions<br/>Execution Hub]
+            ET[Educational Tools<br/>Hints, Difficulty, Content]
+            GT_TOOLS[Game Tools<br/>State, Inventory, Progress]
+            AT[Asset Tools<br/>Nano Banana Pipeline]
+            AN[Analytics Tools<br/>Learning Insights]
+        end
+        
+        %% Static Workflow (NEVER changes)
+        GM -.->|LangGraph tools_condition| GA
+        GA --> GM
+    end
+    
     subgraph "AI Asset Generation Pipeline"
-        IG[Image Gen 4<br/>Base Asset Generation]
+        IG4[Image Gen 4<br/>Base Asset Creation]
         NB[Nano Banana<br/>Photoshop Automation]
-        AP[Asset Processor<br/>Frame Generation]
-        AO[Asset Optimizer<br/>Performance Tuning]
+        AO[Asset Optimizer<br/>Web Performance]
     end
-
-    subgraph "Game Engine Core - Configuration Driven"
-        YC[YAML Config<br/>Loader & Validator]
-        GE[Game Engine<br/>Static Core]
-        TS[Template System<br/>25+ Game Types]
-        RE[Rules Engine<br/>Scoring & Logic]
+    
+    subgraph "Phaser.js Game Rendering"
+        PH[Phaser Engine<br/>Static Core]
+        SC[Scene Manager<br/>Configuration-Driven]
+        GO[Game Objects<br/>Sprites & Physics]
+        FX[Effects System<br/>Animations]
     end
-
-    subgraph "Phaser.js Rendering Pipeline"
-        SM[Scene Manager<br/>Lifecycle Control]
-        GO[Game Objects<br/>Sprites, Physics]
-        FX[Effects System<br/>Animations, Particles]
-        PH[Physics Engine<br/>Matter.js Integration]
+    
+    subgraph "Learning Analytics & Insights"
+        LA[Learning Analytics<br/>Real-time Tracking]
+        PI[Progress Insights<br/>Educational Outcomes]
+        TD[Teacher Dashboard<br/>Class Overview]
+        PR[Parent Reports<br/>Home Communication]
     end
-
-    subgraph "Adaptive Intelligence Layer"
-        AI[AI Orchestrator<br/>LangGraph Based]
-        HS[Hint System<br/>Socratic Engine]
-        AD[Adaptive Difficulty<br/>IRT/Elo Algorithm]
-        EM[Emotion Detection<br/>Opt-in Analysis]
+    
+    subgraph "Safety & Compliance"
+        SM[Safety Monitor<br/>AI Content Filtering]
+        CM[Compliance Manager<br/>COPPA/GDPR]
+        HR[Human Review<br/>Escalation Queue]
     end
-
-    subgraph "Multiplayer & Networking"
-        MN[Multiplayer Netcode<br/>Real-time Sync]
-        LS[Lobby System<br/>Match Making]
-        TS2[Tournament System<br/>Leaderboards]
-        RS[Relay Server<br/>WebRTC/WebSocket]
-    end
-
-    subgraph "Data & Analytics Pipeline"
-        TC[Telemetry Capture<br/>Performance Metrics]
-        EA[Event Analytics<br/>ClickHouse/BigQuery]
-        LM[Learner Model<br/>Progress Tracking]
-        IN[Insights Engine<br/>Teacher Dashboard]
-    end
-
-    subgraph "Safety & Moderation"
-        UGC[UGC Pipeline<br/>User Generated Content]
-        AI_MOD[AI Moderation<br/>Content Filters]
-        HM[Human Moderation<br/>Review Queue]
-        SF[Safety Framework<br/>COPPA/GDPR]
-    end
-
-    subgraph "Marketplace & Distribution"
-        MK[Marketplace<br/>Game Discovery]
-        RT[Rating System<br/>Community Feedback]
-        IC[Incentive System<br/>Creator Rewards]
-        GO2[Governance<br/>Reporting & Audits]
-    end
-
-    subgraph "Offline & Performance"
-        OC[Offline Cache<br/>Service Worker]
-        CR[Content Resolver<br/>Progressive Loading]
-        PO[Performance Optimizer<br/>Asset Streaming]
-        SR[State Resume<br/>Save/Load System]
-    end
-
-    %% External Flow
+    
+    %% External Integration Flow
     PA --> GD
-    CE --> CF
-
-    %% Gap-to-Game Flow
+    CE --> GT
+    LMS --> CG
+    
+    %% Configuration Assembly
     GD --> GT
-    GT --> CF
-    CF --> YC
-
-    %% Asset Generation Flow
-    GT --> IG
-    IG --> NB
-    NB --> AP
-    AP --> AO
+    GT --> CG
+    CG --> SP
+    
+    %% Two-Node Workflow (Core Pattern)
+    SP --> GM
+    GM --> MS
+    ET --> GA
+    GT_TOOLS --> GA
+    AT --> GA
+    AN --> GA
+    
+    %% Asset Generation Coordination
+    AT --> IG4
+    IG4 --> NB
+    NB --> AO
     AO --> GO
-
-    %% Core Engine Flow
-    YC --> GE
-    GE --> TS
-    TS --> RE
-    RE --> SM
-
-    %% Rendering Pipeline
-    SM --> GO
+    
+    %% Game Rendering Pipeline
+    GA --> PH
+    PH --> SC
+    SC --> GO
     GO --> FX
-    FX --> PH
-
-    %% AI Integration
-    GE --> AI
-    AI --> HS
-    AI --> AD
-    AI --> EM
-    HS --> GO
-    AD --> RE
-
-    %% Multiplayer Flow
-    GE --> MN
-    MN --> LS
-    LS --> TS2
-    TS2 --> RS
-
-    %% Analytics Flow
-    GO --> TC
-    PH --> TC
-    TC --> EA
-    EA --> LM
-    LM --> IN
-    IN --> PA
-
+    
+    %% Analytics & Insights Flow
+    GA --> LA
+    LA --> PI
+    PI --> TD
+    PI --> PR
+    TD --> LMS
+    
     %% Safety & Moderation
-    UGC --> AI_MOD
-    AI_MOD --> HM
-    HM --> SF
-    SF --> MK
-
-    %% Marketplace Flow
-    GE --> MK
-    MK --> RT
-    RT --> IC
-    IC --> GO2
-
-    %% Offline & Performance
-    GE --> OC
-    OC --> CR
-    CR --> PO
-    PO --> SR
-
+    GM --> SM
+    GA --> SM
+    SM --> HR
+    HR --> CM
+    CM --> LMS
+    
     %% Feedback Loops
-    TC --> PL
-    IN --> PL
-    MK --> CE
-
-    classDef external fill:#e1f5fe
-    classDef orchestrator fill:#f3e5f5
-    classDef ai fill:#e8f5e8
-    classDef core fill:#fff3e0
-    classDef rendering fill:#fce4ec
-    classDef intelligence fill:#e0f2f1
-    classDef multiplayer fill:#f1f8e9
-    classDef analytics fill:#e3f2fd
-    classDef safety fill:#fff8e1
-    classDef marketplace fill:#faf2ff
-    classDef performance fill:#f9fbe7
-
-    class PA,CE,PL external
-    class GD,GT,CF orchestrator
-    class IG,NB,AP,AO ai
-    class YC,GE,TS,RE core
-    class SM,GO,FX,PH rendering
-    class AI,HS,AD,EM intelligence
-    class MN,LS,TS2,RS multiplayer
-    class TC,EA,LM,IN analytics
-    class UGC,AI_MOD,HM,SF safety
-    class MK,RT,IC,GO2 marketplace
-    class OC,CR,PO,SR performance
+    LA --> PA
+    PI --> CE
+    
+    classDef external fill:#e1f5fe,stroke:#0277bd,stroke-width:2px
+    classDef intelligence fill:#e8f5e8,stroke:#2e7d32,stroke-width:2px
+    classDef twonode fill:#fff3e0,stroke:#f57c00,stroke-width:3px
+    classDef assets fill:#fce4ec,stroke:#c2185b,stroke-width:2px
+    classDef rendering fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    classDef analytics fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    classDef safety fill:#fff8e1,stroke:#f9a825,stroke-width:2px
+    
+    class PA,CE,LMS external
+    class GD,GT,CG intelligence
+    class GM,MS,SP,GA,ET,GT_TOOLS,AT,AN twonode
+    class IG4,NB,AO assets
+    class PH,SC,GO,FX rendering
+    class LA,PI,TD,PR analytics
+    class SM,CM,HR safety
 ```
 
-## Architecture Overview
+## Two-Node Architecture: The Heart of PupilPlay
 
-### Core Philosophy: Configuration-Driven Game Engine
+### 🎯 **Static Workflow, Dynamic Intelligence**
 
-Following the automation engine pattern, PupilPlay operates on a **Configuration-Over-Code** architecture where:
+Following the automation engine's proven pattern, PupilPlay uses an **immutable two-node LangGraph structure**:
 
-- **Static Engine Core**: The Phaser.js-based engine remains unchanged
-- **Dynamic Game Logic**: All gameplay, rules, and behaviors defined in YAML configurations
-- **AI-Powered Orchestration**: LangGraph manages complex game flows and adaptivity
-- **Pluggable Systems**: Modular components connected via standardized interfaces
+1. **Game Master Node**: Educational AI tutor (replaces Assistant Node)
+2. **Game Actions Node**: Execution hub (replaces Tools Node) 
+3. **LangGraph's `tools_condition`**: Built-in routing (no custom logic needed)
 
-### Key Architectural Principles
+### 🏗️ **Why This Architecture is Revolutionary for Educational Gaming**
 
-1. **Separation of Concerns**: Clear boundaries between rendering, logic, AI, and configuration
-2. **Hot-Swappable Configuration**: Real-time game updates without engine restarts
-3. **AI-First Design**: Intelligence built into every layer of the system
-4. **Offline-First Architecture**: Progressive web app with comprehensive caching
-5. **Safety-by-Design**: Built-in moderation and compliance at every level
+#### **Universal Game Engine**
+- **Single Codebase**: Same two nodes power math runners, word puzzles, chemistry labs, and multiplayer battles
+- **Hot-Swappable Logic**: Change entire game mechanics by swapping YAML configuration files
+- **Infinite Scalability**: Add new subjects, age groups, and game types without touching code
 
-## Technology Stack Integration
+#### **Configuration-Over-Code Philosophy**
+All game intelligence lives in the **system prompt template** (loaded from YAML):
 
-### Frontend Layer
-- **React** (Teacher interfaces)
-- **Flutter** (Student mobile apps)
-- **Phaser.js** (Game rendering and physics)
-- **Unity WebGL** (Advanced 3D games)
+```python
+# ALL educational logic is configuration-driven
+system_prompt = config.system_prompt_template.format(
+    subject=config.subject,
+    game_type=config.game_type,
+    player_age=player.age,
+    learning_gaps=player.identified_gaps,
+    available_tools=", ".join(available_game_actions)
+)
+```
 
-### Backend Services
-- **FastAPI** (REST APIs and game logic)
-- **Node.js** (Real-time multiplayer)
-- **Redis** (Caching and pub/sub)
-- **Kafka** (Event streaming)
+## 🧠 **Node 1: Game Master (Educational AI Tutor)**
 
-### AI & Intelligence
-- **LangGraph** (Workflow orchestration)
-- **Gemini 2.5 Flash Image** (Asset generation via Nano Banana)
-- **Image Gen 4** (Base image generation)
-- **Custom IRT/Elo** (Adaptive difficulty)
+### **Core Responsibilities**
+- **Socratic Teaching**: Guide discovery through strategic questioning
+- **Adaptive Tutoring**: Real-time assessment and personalized support
+- **Emotional Intelligence**: Encourage persistence and celebrate progress
+- **Curriculum Alignment**: Ensure all interactions support learning objectives
 
-### Data & Analytics
-- **PostgreSQL** (Game metadata)
-- **MongoDB** (Game states)
-- **ClickHouse** (Real-time analytics)
-- **BigQuery** (Long-term insights)
+### **Gemini Model Selection** (Same as Automation Engine)
+```python
+def select_educational_model(complexity_score: float) -> ChatGoogleGenerativeAI:
+    if complexity_score >= 0.6:  # Complex explanations, creative content
+        return gemini_pro_with_circuit_breaker()
+    else:  # Quick feedback, routine interactions  
+        return gemini_flash_with_circuit_breaker()
+```
 
-## Detailed Component Analysis
+### **Educational System Prompt Structure**
+Every subject gets specialized prompts loaded from configuration:
 
-### 1. Gap-to-Game Orchestrator
-
-**Purpose**: Transforms educational gaps into playable game experiences
-
-**Components**:
-- **Gap Detection Input Processor**: Receives assessment data from PupilAssess
-- **Game Template Selector**: AI-powered matching of gaps to optimal game templates
-- **Content Fetcher**: Retrieves curriculum-aligned content from Content Engine
-
-**YAML Configuration**:
 ```yaml
-gap_to_game:
-  processors:
-    - gap_type: "multiplication_facts"
-      preferred_templates: ["math_runner", "number_puzzle", "calculation_battle"]
-      difficulty_mapping:
-        novice: 1-5
-        intermediate: 6-12
-        advanced: 13-25
-  content_filters:
-    age_appropriate: true
-    curriculum_aligned: true
-    accessibility_compliant: true
+# Math Game Master Configuration
+system_prompt_template: |
+  You are an expert mathematics educator embedded in "{game_name}".
+  
+  EDUCATIONAL CONTEXT:
+  - Student: {player_name}, age {player_age}
+  - Subject: {subject}, Topic: {current_topic}
+  - Learning Gaps: {identified_gaps}
+  - Current Performance: {recent_accuracy}% accuracy
+  
+  AVAILABLE GAME ACTIONS:
+  {available_game_actions}
+  
+  TEACHING PHILOSOPHY:
+  - Use Socratic questioning to guide discovery
+  - Celebrate effort and progress, not just correct answers
+  - Provide hints that guide thinking, never direct answers
+  - Maintain 80% success rate for confidence building
 ```
 
-### 2. AI Asset Generation Pipeline
+## ⚡ **Node 2: Game Actions (Execution Hub)**
 
-**Purpose**: Automated creation and optimization of 2D game assets
+### **Tool Categories** (Equivalent to MCP Tools)
 
-**Workflow**:
-1. **Image Gen 4**: Generates base game assets from text prompts
-2. **Nano Banana**: Photoshop-style editing and refinement
-3. **Asset Processor**: Creates animation frames and variants
-4. **Asset Optimizer**: Compresses and optimizes for web delivery
+#### **Educational Tools**
+- `adjust_difficulty`: Real-time challenge calibration
+- `generate_hint`: Context-aware learning support  
+- `create_educational_content`: Dynamic curriculum-aligned problems
+- `assess_understanding`: Invisible knowledge probing
+- `provide_explanation`: Multi-modal concept clarification
 
-**Example Integration**:
+#### **Game Mechanics Tools**
+- `update_game_state`: Player progress and achievements
+- `trigger_celebration`: Success animations and positive reinforcement
+- `manage_inventory`: Educational rewards and unlocks
+- `save_progress`: Persistent learning achievements
+
+#### **AI Asset Generation Tools**
+- `generate_visual_asset`: Nano Banana + Image Gen 4 pipeline
+- `create_character_variation`: Personalized avatar customization
+- `design_environment_element`: Dynamic educational environments
+
+#### **Analytics & Integration Tools**
+- `record_learning_interaction`: Educational outcome tracking
+- `sync_external_systems`: PupilAssess, Content Engine, LMS integration
+- `generate_insights`: Learning pattern analysis and recommendations
+
+## 🎮 **Game Type Specializations Through Configuration**
+
+### **Mathematics Games**
 ```yaml
-asset_generation:
-  base_generator: "image_gen_4"
-  editor: "nano_banana"
-  processing:
-    animation_frames: 8
-    variants: ["idle", "walking", "jumping", "celebrating"]
-    formats: ["webp", "png", "svg"]
-  optimization:
-    compression: "aggressive"
-    lazy_loading: true
-    progressive_enhancement: true
+game_master_specialization: "mathematics_tutor"
+teaching_approaches: ["visual_conceptual", "pattern_recognition", "real_world_applications"]
+primary_tools: ["generate_math_problem", "provide_visual_hint", "assess_number_sense"]
 ```
 
-### 3. Game Engine Core (Configuration-Driven)
-
-**Static Components**:
-- Engine initialization and lifecycle management
-- Asset loading and memory management
-- Performance monitoring and optimization
-
-**Dynamic Components (YAML-Driven)**:
-- Game rules and scoring logic
-- Template selection and instantiation
-- Player progression algorithms
-
-**Configuration Structure**:
+### **Science Laboratory Games**
 ```yaml
-game_config:
-  template: "math_runner"
-  version: "1.2.0"
-
-  gameplay:
-    objective: "Collect correct multiplication answers while avoiding wrong ones"
-    win_conditions:
-      - type: "score"
-        threshold: 1000
-      - type: "accuracy"
-        minimum: 80
-
-  difficulty:
-    algorithm: "elo_based"
-    starting_elo: 1200
-    adjustment_factor: 32
-
-  assets:
-    character: "ninja_cat"
-    environment: "forest_temple"
-    collectibles: "math_gems"
-
-  physics:
-    gravity: 300
-    jump_strength: 400
-    collision_detection: "arcade"
+game_master_specialization: "inquiry_facilitator"  
+teaching_approaches: ["hypothesis_driven", "observation_based", "safety_first"]
+primary_tools: ["design_safe_experiment", "guide_scientific_reasoning", "connect_real_world"]
 ```
 
-### 4. Phaser.js Rendering Pipeline
-
-**Scene Management**:
-- Dynamic scene loading based on YAML configuration
-- State persistence across scene transitions
-- Memory-efficient asset management
-
-**Game Object System**:
-- Component-based entity architecture
-- Physics integration with Matter.js
-- Sprite animation and effects system
-
-**Performance Optimization**:
-- Object pooling for frequent instantiation
-- Texture atlasing for reduced draw calls
-- Progressive asset loading
-
-### 5. Adaptive Intelligence Layer
-
-**LangGraph Orchestration**:
+### **Language Arts Games**
 ```yaml
-intelligence_workflow:
-  nodes:
-    - name: "difficulty_assessor"
-      type: "ai_node"
-      model: "gemini_flash"
-      prompt: "Analyze player performance and suggest difficulty adjustment"
-
-    - name: "hint_generator"
-      type: "ai_node"
-      model: "gemini_pro"
-      prompt: "Generate Socratic hints based on player's mistake pattern"
-
-    - name: "emotion_analyzer"
-      type: "ai_node"
-      model: "custom_classifier"
-      input: ["facial_expression", "interaction_patterns"]
-
-  edges:
-    - from: "difficulty_assessor"
-      to: "game_adjuster"
-      condition: "performance_change_detected"
+game_master_specialization: "literacy_coach"
+teaching_approaches: ["balanced_literacy", "phonics_based", "comprehension_focused"]
+primary_tools: ["generate_vocabulary_challenge", "provide_reading_support", "assess_comprehension"]
 ```
 
-### 6. Multiplayer Architecture
-
-**Real-time Networking**:
-- WebRTC for peer-to-peer gameplay
-- WebSocket fallback for relay server
-- Authoritative server for anti-cheat
-
-**Scalability Design**:
-- Horizontal scaling via Kubernetes
-- Regional game servers
-- Dynamic load balancing
-
-**Configuration Example**:
+### **History & Social Studies Games**
 ```yaml
-multiplayer:
-  max_players: 4
-  game_modes:
-    - name: "cooperative"
-      description: "Work together to solve math problems"
-      victory_condition: "team_score"
-
-    - name: "competitive"
-      description: "Race to answer math questions first"
-      victory_condition: "individual_score"
-
-  networking:
-    protocol: "webrtc_with_websocket_fallback"
-    tick_rate: 30
-    lag_compensation: true
-    rollback_frames: 3
+game_master_specialization: "perspective_facilitator"
+teaching_approaches: ["inquiry_based", "multiple_perspectives", "chronological_thinking"]
+primary_tools: ["analyze_primary_sources", "compare_viewpoints", "construct_timelines"]
 ```
 
-### 7. Safety & Moderation Pipeline
+## 🚀 **Key Advantages of Two-Node Architecture**
 
-**Multi-Layer Approach**:
-1. **AI Pre-filtering**: Automatic content analysis
-2. **Behavioral Monitoring**: Real-time player interaction analysis
-3. **Human Review**: Escalation queue for edge cases
-4. **Community Reporting**: Player-driven safety system
+### **For Educators**
+1. **Zero Programming Required**: All customization through intuitive YAML files
+2. **Instant Game Creation**: New educational games deployed in minutes
+3. **A/B Testing**: Compare teaching approaches scientifically without code changes
+4. **Curriculum Alignment**: Built-in standards mapping and progress tracking
 
-**Compliance Framework**:
-```yaml
-safety_config:
-  compliance:
-    - standard: "COPPA"
-      features: ["parental_consent", "limited_data_collection"]
-    - standard: "GDPR"
-      features: ["right_to_erasure", "data_portability"]
+### **For Developers**  
+1. **Single Universal Engine**: One codebase serves all educational domains
+2. **Hot-Swappable Configuration**: Update game mechanics without deployments
+3. **Proven Architecture**: Based on successful automation engine pattern
+4. **AI-First Development**: Intelligence built into every decision point
 
-  moderation:
-    ai_filters:
-      - type: "toxicity"
-        threshold: 0.7
-      - type: "inappropriate_content"
-        threshold: 0.8
+### **For Students**
+1. **Personalized Learning**: AI adapts to individual needs and learning styles
+2. **Engaging Content**: AI-generated assets keep experiences fresh and relevant
+3. **Seamless Support**: Educational assistance naturally integrated into gameplay
+4. **Progress Visibility**: Clear understanding of learning achievements and growth
 
-    human_review:
-      escalation_triggers: ["ai_uncertainty", "user_report"]
-      response_time_sla: "2_hours"
-```
+## 📊 **Performance & Scalability**
 
-## Performance Targets & Optimization
+### **Efficient Resource Usage**
+- **Model Selection**: Route simple interactions to Gemini Flash, complex to Gemini Pro
+- **Caching Strategy**: Cache similar educational interactions for faster responses
+- **Asset Optimization**: Generate once, reuse across multiple game instances
+- **State Management**: Minimal state design following automation engine patterns
 
-### Core Performance Metrics
-- **Single Player**: <150ms p95 response time
-- **Multiplayer**: <250ms p95 response time
-- **Time to First Play**: <2.5s on 4G connection
-- **Concurrent Users**: 50k CCU scaling capability
-
-### Optimization Strategies
-
-1. **Asset Optimization**:
-   - WebP format with PNG fallback
-   - Sprite sheet atlasing
-   - Progressive image loading
-   - CDN distribution
-
-2. **Code Optimization**:
-   - Tree shaking for minimal bundle size
-   - Lazy loading of game modules
-   - Web Workers for background processing
-   - Service Worker for offline capabilities
-
-3. **Network Optimization**:
-   - Delta compression for multiplayer
-   - Predictive asset preloading
-   - Regional server deployment
-   - HTTP/2 push for critical resources
-
-## Development Workflow
-
-### Configuration-First Development
-
-1. **Define Game Requirements** → YAML configuration
-2. **Generate Base Assets** → Image Gen 4 + Nano Banana
-3. **Configure Game Logic** → Template system + rules engine
-4. **Test & Iterate** → Hot-reload configuration changes
-5. **Deploy** → Zero-downtime deployment with A/B testing
-
-### Quality Assurance
-
-- **Automated Testing**: Configuration validation, performance benchmarks
-- **AI-Powered QA**: Automated gameplay testing, balance detection
-- **Accessibility Testing**: WCAG 2.1 AA compliance validation
-- **Security Testing**: Penetration testing, compliance audits
-
-## Scalability & Future-Proofing
-
-### Horizontal Scaling Capabilities
-- **Microservice Architecture**: Independent scaling of game components
-- **Database Sharding**: Player data distributed across multiple databases
-- **CDN Integration**: Global asset distribution with edge caching
+### **Horizontal Scaling**
+- **Microservice Ready**: Each component independently scalable
+- **Database Sharding**: Player data distributed for optimal performance  
+- **CDN Integration**: Global asset delivery with intelligent caching
 - **Auto-scaling**: Kubernetes-based dynamic resource allocation
 
-### Extension Points
-- **Custom Game Templates**: Plugin system for new game types
-- **Third-party Integrations**: Open API for external tools
-- **Advanced AI Models**: Swappable intelligence components
-- **Platform Expansion**: Cross-platform deployment ready
+## 🛡️ **Safety & Compliance Integration**
 
-This architecture provides a robust, scalable foundation for PupilPlay that can adapt to changing educational needs while maintaining high performance and safety standards.
+### **Built-in Educational Safety**
+- **Age-Appropriate Content**: Automatic filtering based on target demographics
+- **Learning-Focused Interactions**: All conversations directed toward educational outcomes
+- **Progress Transparency**: Parents and teachers have full visibility into learning activities
+- **Privacy-by-Design**: Minimal data collection with comprehensive protection
+
+### **Regulatory Compliance**
+- **COPPA Compliant**: Child privacy protection built into every interaction
+- **GDPR Ready**: Data portability and right to erasure automatically supported
+- **FERPA Aligned**: Educational record privacy maintained across all systems
+
+## 🎯 **Implementation Workflow**
+
+### **Configuration-First Development**
+1. **Define Learning Objectives** → Educational requirements analysis
+2. **Select Game Template** → AI-powered template matching  
+3. **Configure System Prompts** → Subject-specific teaching strategies
+4. **Generate Assets** → Nano Banana + Image Gen 4 pipeline
+5. **Deploy & Monitor** → Real-time performance and learning analytics
+
+### **Quality Assurance**
+- **Educational Effectiveness**: AI-powered learning outcome validation
+- **Accessibility Compliance**: WCAG 2.1 AA automatic verification
+- **Performance Benchmarks**: < 150ms response time for educational interactions
+- **Safety Verification**: Content appropriateness and privacy protection testing
+
+This two-node architecture transforms educational gaming from static experiences into dynamic, intelligent, and deeply personalized learning adventures that adapt in real-time to each student's unique needs and learning journey.

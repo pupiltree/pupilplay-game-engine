@@ -1,0 +1,131 @@
+# ===============================================
+# SIMPLE WORD GAME - TWO-NODE EXAMPLE  
+# ===============================================
+# A streamlined vocabulary game using two-node LangGraph pattern
+
+domain: "educational_games"
+game_type: "word_puzzle"
+version: "1.0.0"
+company_name: "PupilTree.ai"
+
+# ===============================================
+# CORE GAME DEFINITION
+# ===============================================
+game_definition:
+  name: "Word Builder"
+  description: "Build vocabulary through interactive word puzzles"
+  target_age_range: [7, 12]
+  subject: "language_arts"
+  topic: "vocabulary"
+  
+  learning_objectives:
+    - "Expand vocabulary knowledge"
+    - "Improve spelling skills"
+    - "Practice reading comprehension"
+
+# ===============================================
+# TWO-NODE LANGGRAPH CONFIGURATION
+# ===============================================
+langgraph_orchestration:
+  # Static two-node workflow
+  workflow:
+    name: "word_game_engine"
+    architecture: "two_node_static"
+    
+    # Node 1: Game Master (Literacy Coach)
+    game_master_node:
+      model_selection:
+        primary: "gemini_pro"      # Complex vocabulary explanations
+        fallback: "gemini_flash"   # Quick word hints
+        
+      system_prompt_template: |
+        You are a helpful literacy coach in the "Word Builder" game.
+        
+        STUDENT CONTEXT:
+        - Name: {player_name}, Age: {player_age}
+        - Reading Level: {reading_level}
+        - Current Accuracy: {recent_accuracy}%
+        - Focus Area: {current_topic}
+        
+        AVAILABLE GAME ACTIONS:
+        - adjust_difficulty: Change word complexity
+        - generate_hint: Provide vocabulary hints
+        - create_word_puzzle: Generate new word challenges
+        - explain_meaning: Define words clearly
+        - update_vocabulary: Track word mastery
+        
+        TEACHING APPROACH:
+        - Use simple, clear explanations
+        - Encourage reading and word exploration
+        - Make vocabulary fun and memorable
+        - Build on what students already know
+        
+        Help {player_name} become a word wizard!
+    
+    # Node 2: Game Actions
+    game_actions_node:
+      educational_tools:
+        - name: "adjust_difficulty"
+          description: "Modify word complexity level"
+          
+        - name: "generate_hint" 
+          description: "Create vocabulary hints"
+          
+        - name: "create_word_puzzle"
+          description: "Generate word challenges"
+          
+        - name: "explain_meaning"
+          description: "Provide clear word definitions"
+          
+        - name: "update_vocabulary"
+          description: "Track vocabulary progress"
+
+# ===============================================
+# SIMPLIFIED ASSET GENERATION
+# ===============================================
+asset_generation:
+  models:
+    base_generator: "image_gen_4"
+    editor: "nano_banana"
+    
+  character:
+    base_prompt: "Wise owl character with books, friendly for children"
+    style: "cartoon educational"
+    
+  environment:
+    base_prompt: "Magical library with floating letters and words"
+    mood: "warm and inviting"
+
+# ===============================================
+# CONTENT CONFIGURATION
+# ===============================================
+content_generation:
+  word_categories:
+    - category: "everyday_words"
+      difficulty: "easy"
+      examples: ["cat", "dog", "house", "tree"]
+      
+    - category: "descriptive_words"
+      difficulty: "medium"  
+      examples: ["beautiful", "enormous", "delicious"]
+      
+  puzzle_types:
+    - "word_scramble"
+    - "missing_letters"
+    - "definition_match"
+
+# ===============================================
+# BASIC CONFIGURATION
+# ===============================================
+phaser_config:
+  renderer:
+    type: "AUTO"
+    width: 800
+    height: 600
+    
+analytics:
+  track_metrics: ["words_learned", "accuracy", "time_per_word"]
+  
+safety_config:
+  compliance: ["COPPA", "GDPR"]
+  age_appropriate: true

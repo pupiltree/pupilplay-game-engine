@@ -1,0 +1,156 @@
+# ===============================================
+# SIMPLE MATH RUNNER - TWO-NODE EXAMPLE
+# ===============================================
+# A streamlined example showing the two-node LangGraph pattern
+# Based on automation engine's proven architecture
+
+domain: "educational_games"
+game_type: "math_runner"
+version: "1.0.0"
+company_name: "PupilTree.ai"
+
+# ===============================================
+# CORE GAME DEFINITION
+# ===============================================
+game_definition:
+  name: "Math Runner"
+  description: "Collect correct answers while running through mathematical adventures"
+  target_age_range: [8, 12]
+  subject: "mathematics"
+  topic: "multiplication"
+  
+  learning_objectives:
+    - "Master multiplication facts 2-12"
+    - "Improve calculation speed"
+    - "Build mathematical confidence"
+
+# ===============================================
+# TWO-NODE LANGGRAPH CONFIGURATION
+# ===============================================
+langgraph_orchestration:
+  # Static two-node workflow (NEVER changes)
+  workflow:
+    name: "math_runner_engine"
+    architecture: "two_node_static"
+    
+    # Node 1: Game Master (Educational AI Tutor)
+    game_master_node:
+      model_selection:
+        primary: "gemini_pro"      # Complex math explanations
+        fallback: "gemini_flash"   # Quick feedback
+        
+      # ALL educational logic in system prompt
+      system_prompt_template: |
+        You are a friendly math tutor in the "Math Runner" game.
+        
+        STUDENT CONTEXT:
+        - Name: {player_name}, Age: {player_age}
+        - Current Level: {current_level}
+        - Recent Accuracy: {recent_accuracy}%
+        - Learning Focus: {current_topic}
+        
+        AVAILABLE GAME ACTIONS:
+        - adjust_difficulty: Change problem difficulty
+        - generate_hint: Provide helpful math hints  
+        - create_problem: Generate new multiplication problems
+        - update_progress: Track learning achievements
+        - trigger_celebration: Celebrate successes
+        
+        TEACHING APPROACH:
+        - Use encouraging, age-appropriate language
+        - Guide discovery with questions, don't give direct answers
+        - Celebrate effort and progress, not just correctness
+        - Keep students in their optimal challenge zone
+        
+        Help {player_name} master multiplication through fun gameplay!
+    
+    # Node 2: Game Actions (Execution Hub)
+    game_actions_node:
+      educational_tools:
+        - name: "adjust_difficulty"
+          description: "Change problem difficulty based on performance"
+          
+        - name: "generate_hint"
+          description: "Create helpful math hints"
+          
+        - name: "create_problem"
+          description: "Generate new multiplication problems"
+          
+        - name: "update_progress"
+          description: "Track student learning progress"
+          
+        - name: "trigger_celebration"
+          description: "Activate success animations"
+
+# ===============================================
+# AI ASSET GENERATION
+# ===============================================
+asset_generation:
+  models:
+    base_generator: "image_gen_4"
+    editor: "nano_banana"
+    
+  character:
+    base_prompt: "Friendly cartoon cat wearing running shoes, child-friendly style"
+    animations: ["idle", "running", "jumping", "celebrating"]
+    
+  environment:
+    base_prompt: "Colorful math-themed running track with numbers and equations"
+    style: "bright and engaging for children"
+
+# ===============================================
+# PHASER.JS GAME CONFIGURATION
+# ===============================================
+phaser_config:
+  renderer:
+    type: "AUTO"
+    width: 800
+    height: 600
+    
+  scenes:
+    - key: "GameScene"
+      file: "scenes/GameScene.js"
+    - key: "MenuScene"  
+      file: "scenes/MenuScene.js"
+      
+  physics:
+    default: "arcade"
+    arcade:
+      gravity: { y: 300 }
+
+# ===============================================
+# CONTENT GENERATION
+# ===============================================
+content_generation:
+  problem_types:
+    - type: "basic_multiplication"
+      range: [2, 12]
+      format: "{a} × {b} = ?"
+      
+  difficulty_adaptation:
+    algorithm: "simple_elo"
+    starting_level: 0.5
+    adjustment_rate: 0.1
+
+# ===============================================
+# ANALYTICS
+# ===============================================
+analytics:
+  track_metrics:
+    - "problems_attempted"
+    - "accuracy_rate" 
+    - "response_time"
+    - "hint_usage"
+    
+  reporting:
+    student_dashboard: "progress_overview"
+    teacher_portal: "class_performance"
+
+# ===============================================
+# SAFETY & PRIVACY
+# ===============================================
+safety_config:
+  compliance: ["COPPA", "GDPR"]
+  content_filtering: "age_appropriate"
+  data_collection: "minimal"
+  parental_controls: "full_access"

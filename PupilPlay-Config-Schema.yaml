@@ -1,0 +1,628 @@
+# PupilPlay Game Engine - Universal Configuration Schema
+# Based on Automation Engine Configuration-Driven Architecture Pattern
+
+# ===============================================
+# GAME DOMAIN CONFIGURATION
+# ===============================================
+domain: "educational_games"  # educational_games | assessment_games | multiplayer_games
+game_type: "math_runner"     # Template identifier
+version: "1.0.0"
+company_name: "PupilTree.ai"
+environment: "production"    # development | staging | production
+
+# ===============================================
+# CORE GAME DEFINITION
+# ===============================================
+game_definition:
+  name: "Multiplication Masters"
+  description: "Help students master multiplication through engaging gameplay"
+  target_age_range: [8, 12]
+  subject: "mathematics"
+  topic: "multiplication"
+  difficulty_range: [1, 10]
+  
+  # Learning objectives aligned with curriculum standards
+  learning_objectives:
+    - "Master multiplication facts 1-12"
+    - "Improve calculation speed and accuracy"
+    - "Build confidence in mathematical problem solving"
+    
+  # Game completion criteria
+  success_criteria:
+    accuracy_threshold: 0.85
+    speed_improvement: 0.20
+    engagement_duration: 900  # seconds
+
+# ===============================================
+# TEMPLATE SYSTEM CONFIGURATION
+# ===============================================
+template_config:
+  base_template: "math_runner"
+  template_version: "2.1.0"
+  
+  # Template-specific customizations
+  customizations:
+    character_type: "ninja_cat"
+    environment: "enchanted_forest"
+    collectible_type: "magic_gems"
+    obstacle_type: "math_traps"
+    
+  # Game mechanics overrides
+  mechanics:
+    movement_speed: 200
+    jump_height: 400
+    gravity: 600
+    lives: 3
+    time_limit: 300
+    
+  # Scoring system configuration
+  scoring:
+    correct_answer: 100
+    speed_bonus: 50
+    combo_multiplier: 1.5
+    penalty_wrong: -25
+    penalty_timeout: -10
+
+# ===============================================
+# AI ASSET GENERATION PIPELINE
+# ===============================================
+asset_generation:
+  # AI model configurations
+  models:
+    base_generator:
+      name: "image_gen_4"
+      api_endpoint: "${IMAGE_GEN4_ENDPOINT}"
+      api_key: "${IMAGE_GEN4_API_KEY}"
+      
+    editor:
+      name: "nano_banana"
+      model: "gemini_2_5_flash_image"
+      api_endpoint: "${GEMINI_API_ENDPOINT}"
+      api_key: "${GEMINI_API_KEY}"
+      pricing:
+        per_image: 0.039
+        token_count: 1290
+  
+  # Asset generation workflows
+  workflows:
+    character_sprites:
+      base_prompt: "Create a friendly {character_type} character suitable for children aged {age_range}"
+      variations: ["idle", "running", "jumping", "celebrating", "hit"]
+      animation_frames: 8
+      dimensions: [64, 64]
+      format: "sprite_sheet"
+      
+    environment_assets:
+      base_prompt: "Design a {environment} background with educational mathematical elements"
+      layers: ["background", "midground", "foreground", "ui_overlay"]
+      dimensions: [1920, 1080]
+      parallax_layers: true
+      
+    ui_elements:
+      base_prompt: "Create child-friendly UI elements with {theme} aesthetic"
+      components: ["buttons", "score_display", "progress_bar", "modals"]
+      style: "cartoon_flat"
+      accessibility: "wcag_2.1_aa"
+  
+  # Processing pipeline
+  processing:
+    optimization:
+      compression: "aggressive"
+      formats: ["webp", "png"]  # webp preferred, png fallback
+      
+    variants:
+      mobile: 
+        scale: 0.75
+        quality: 85
+      desktop:
+        scale: 1.0
+        quality: 95
+        
+    caching:
+      cdn_distribution: true
+      cache_duration: "30d"
+      preload_critical: true
+
+# ===============================================
+# GAME CONTENT CONFIGURATION  
+# ===============================================
+content_generation:
+  # Content engine integration
+  content_source:
+    engine: "pupil_content_engine"
+    endpoint: "${CONTENT_ENGINE_ENDPOINT}"
+    authentication: "${CONTENT_ENGINE_TOKEN}"
+    
+  # Curriculum alignment
+  curriculum_standards:
+    - name: "NCERT"
+      grade: 4
+      chapter: "Multiplication and Division"
+    - name: "Common Core"
+      standard: "4.NBT.B.5"
+      
+  # Dynamic content generation
+  problem_generation:
+    algorithm: "adaptive_difficulty"
+    pool_size: 100
+    refresh_interval: "1h"
+    
+    # Problem categories and distribution
+    categories:
+      - type: "single_digit"
+        weight: 0.4
+        range: [1, 9]
+      - type: "double_digit"
+        weight: 0.4  
+        range: [10, 99]
+      - type: "word_problems"
+        weight: 0.2
+        complexity: "age_appropriate"
+        
+  # Hint system configuration
+  hint_system:
+    socratic_method: true
+    progressive_disclosure: true
+    max_hints: 3
+    
+    hint_types:
+      - type: "visual"
+        description: "Show visual representation"
+      - type: "decomposition"
+        description: "Break problem into smaller parts"
+      - type: "strategy"
+        description: "Suggest solving strategy"
+
+# ===============================================
+# ADAPTIVE INTELLIGENCE CONFIGURATION
+# ===============================================
+ai_orchestration:
+  # LangGraph workflow definition
+  workflow:
+    name: "adaptive_game_orchestrator"
+    version: "1.0"
+    
+    nodes:
+      - name: "difficulty_assessor"
+        type: "ai_node"
+        model: "gemini_flash"
+        system_prompt: |
+          You are an expert educational game difficulty assessor. 
+          Analyze the student's performance data and determine optimal difficulty adjustments.
+          Consider accuracy, response time, frustration indicators, and engagement metrics.
+        tools: ["calculate_elo", "analyze_performance_trends"]
+        
+      - name: "hint_generator"
+        type: "ai_node"
+        model: "gemini_pro"
+        system_prompt: |
+          You are a Socratic tutor specializing in mathematics education.
+          Generate progressive hints that guide students to discover answers themselves.
+          Use age-appropriate language and encourage mathematical thinking.
+        tools: ["get_curriculum_context", "generate_visual_aids"]
+        
+      - name: "engagement_monitor"
+        type: "ai_node"
+        model: "custom_emotion_classifier"
+        system_prompt: |
+          Monitor student engagement through interaction patterns and optional emotion detection.
+          Alert if frustration levels rise or engagement drops significantly.
+        tools: ["analyze_interaction_patterns", "detect_emotions"]
+        
+      - name: "content_selector"
+        type: "ai_node"
+        model: "gemini_flash"
+        system_prompt: |
+          Select optimal learning content based on student profile and current performance.
+          Ensure curriculum alignment and progressive skill building.
+        tools: ["query_content_engine", "check_prerequisites"]
+    
+    edges:
+      - from: "difficulty_assessor"
+        to: "content_selector"
+        condition: "difficulty_change_needed"
+        
+      - from: "engagement_monitor"
+        to: "hint_generator"
+        condition: "student_struggling"
+        
+      - from: "content_selector"
+        to: "hint_generator"
+        condition: "content_updated"
+  
+  # Adaptive difficulty algorithms
+  difficulty_adaptation:
+    algorithm: "elo_based"
+    starting_elo: 1200
+    k_factor: 32
+    
+    performance_factors:
+      - metric: "accuracy"
+        weight: 0.4
+        target: 0.75
+      - metric: "response_time"
+        weight: 0.3
+        target: 15  # seconds
+      - metric: "hint_usage"
+        weight: 0.2
+        target: 1
+      - metric: "engagement"
+        weight: 0.1
+        target: 0.8
+        
+  # Emotion detection (opt-in)
+  emotion_detection:
+    enabled: false  # Requires explicit parental consent
+    models: ["facial_expression", "voice_tone", "interaction_patterns"]
+    privacy:
+      local_processing: true
+      no_data_storage: true
+      anonymized_analytics_only: true
+
+# ===============================================
+# PHASER.JS RENDERING CONFIGURATION
+# ===============================================
+phaser_config:
+  # Core Phaser settings
+  renderer:
+    type: "AUTO"  # AUTO, CANVAS, WEBGL
+    width: 1024
+    height: 768
+    pixel_art: false
+    antialias: true
+    
+  # Scene configuration
+  scenes:
+    preloader:
+      key: "PreloaderScene"
+      active: true
+      assets:
+        - sprites: "assets/sprites/"
+        - audio: "assets/audio/"
+        - fonts: "assets/fonts/"
+        
+    main_menu:
+      key: "MainMenuScene"
+      background: "menu_bg"
+      music: "menu_theme"
+      
+    gameplay:
+      key: "GameplayScene"
+      physics: "arcade"
+      background: "game_bg"
+      music: "gameplay_theme"
+      
+    pause:
+      key: "PauseScene"
+      modal: true
+      
+    game_over:
+      key: "GameOverScene"
+      statistics: true
+  
+  # Physics engine configuration
+  physics:
+    default: "arcade"
+    arcade:
+      gravity: { y: 300 }
+      debug: false
+      
+  # Audio configuration
+  audio:
+    disable_web_audio: false
+    no_audio: false
+    
+  # Performance settings
+  performance:
+    fps_target: 60
+    object_pool_size: 100
+    max_particles: 500
+    texture_atlas: true
+
+# ===============================================
+# MULTIPLAYER CONFIGURATION
+# ===============================================
+multiplayer:
+  enabled: true
+  max_players: 4
+  
+  # Game modes
+  game_modes:
+    - name: "cooperative"
+      description: "Work together to solve problems"
+      victory_condition: "team_score_threshold"
+      team_based: true
+      
+    - name: "competitive"
+      description: "Race to answer questions first"
+      victory_condition: "individual_high_score"
+      team_based: false
+      
+    - name: "relay"
+      description: "Take turns solving problems"
+      victory_condition: "completion_time"
+      team_based: true
+      turn_based: true
+  
+  # Networking configuration
+  networking:
+    protocol: "webrtc_with_websocket_fallback"
+    signaling_server: "${SIGNALING_SERVER_URL}"
+    turn_servers: ["${TURN_SERVER_1}", "${TURN_SERVER_2}"]
+    
+    game_state:
+      tick_rate: 30
+      lag_compensation: true
+      rollback_frames: 3
+      
+    matchmaking:
+      skill_based: true
+      region_preference: true
+      max_wait_time: 30  # seconds
+      
+  # Anti-cheat measures
+  anti_cheat:
+    authoritative_server: true
+    client_validation: false
+    suspicious_behavior_detection: true
+    automated_response: "flag_for_review"
+
+# ===============================================
+# SAFETY & MODERATION CONFIGURATION
+# ===============================================
+safety_config:
+  # Compliance standards
+  compliance:
+    - standard: "COPPA"
+      requirements:
+        - parental_consent
+        - limited_data_collection
+        - safe_communication
+        
+    - standard: "GDPR" 
+      requirements:
+        - right_to_erasure
+        - data_portability
+        - consent_management
+        
+    - standard: "WCAG_2_1_AA"
+      requirements:
+        - keyboard_navigation
+        - screen_reader_support
+        - color_contrast_ratio
+        
+  # Content moderation
+  moderation:
+    # AI-powered filtering
+    ai_moderation:
+      toxicity_detection:
+        enabled: true
+        threshold: 0.7
+        model: "perspective_api"
+        
+      inappropriate_content:
+        enabled: true
+        threshold: 0.8
+        categories: ["violence", "adult_content", "hate_speech"]
+        
+    # Human moderation
+    human_review:
+      escalation_triggers:
+        - ai_uncertainty_high
+        - user_report_received
+        - repeat_offender
+        
+      response_sla:
+        priority_high: "2_hours"
+        priority_medium: "24_hours"
+        priority_low: "72_hours"
+        
+  # Communication safety
+  communication:
+    chat_enabled: false  # Disabled for child safety by default
+    predefined_messages: true
+    emoji_only: true
+    profanity_filter: true
+    
+  # Privacy protection
+  privacy:
+    data_minimization: true
+    local_processing_preferred: true
+    anonymized_analytics: true
+    no_personal_data_sharing: true
+
+# ===============================================
+# ANALYTICS & TELEMETRY CONFIGURATION
+# ===============================================
+analytics:
+  # Telemetry collection
+  telemetry:
+    enabled: true
+    sampling_rate: 1.0  # 100% in development, reduce in production
+    
+    # Performance metrics
+    performance:
+      - fps_monitoring
+      - load_times
+      - memory_usage
+      - network_latency
+      
+    # Learning analytics
+    learning:
+      - problem_attempt_accuracy
+      - time_per_problem
+      - hint_usage_patterns
+      - difficulty_progression
+      - engagement_duration
+      
+    # Behavioral analytics (anonymized)
+    behavioral:
+      - navigation_patterns
+      - feature_usage
+      - session_duration
+      - retention_metrics
+  
+  # Data storage configuration
+  storage:
+    clickhouse:
+      endpoint: "${CLICKHOUSE_ENDPOINT}"
+      database: "pupilplay_analytics"
+      retention_days: 365
+      
+    bigquery:
+      project_id: "${GCP_PROJECT_ID}"
+      dataset: "pupilplay_insights"
+      
+  # Real-time dashboards
+  dashboards:
+    teacher_dashboard:
+      metrics: ["student_progress", "class_performance", "engagement_trends"]
+      update_frequency: "real_time"
+      
+    admin_dashboard:
+      metrics: ["system_performance", "usage_statistics", "error_rates"]
+      update_frequency: "5_minutes"
+
+# ===============================================
+# DEPLOYMENT & INFRASTRUCTURE
+# ===============================================
+deployment:
+  # Infrastructure configuration
+  infrastructure:
+    platform: "kubernetes"
+    cloud_provider: "gcp"  # gcp | aws | azure
+    regions: ["us-central1", "europe-west1", "asia-southeast1"]
+    
+  # Container configuration
+  containers:
+    game_engine:
+      image: "pupilplay/game-engine"
+      resources:
+        cpu: "500m"
+        memory: "1Gi"
+      replicas: 3
+      
+    multiplayer_server:
+      image: "pupilplay/multiplayer-server"  
+      resources:
+        cpu: "1000m"
+        memory: "2Gi"
+      replicas: 2
+      
+  # CDN configuration
+  cdn:
+    provider: "cloudflare"
+    caching:
+      static_assets: "30d"
+      api_responses: "5m"
+      game_configs: "1h"
+      
+  # SSL/TLS configuration
+  security:
+    ssl_enforcement: true
+    hsts_enabled: true
+    certificate_authority: "letsencrypt"
+    
+  # Monitoring and alerting
+  monitoring:
+    prometheus:
+      scrape_interval: "30s"
+      retention: "15d"
+      
+    grafana:
+      dashboards: ["game_performance", "infrastructure", "business_metrics"]
+      
+    alerting:
+      channels: ["slack", "email", "pagerduty"]
+      conditions:
+        high_error_rate: "> 5%"
+        high_latency: "> 2s"
+        low_availability: "< 99%"
+
+# ===============================================
+# ENVIRONMENT VARIABLES
+# ===============================================
+# Note: Actual values should be set via environment variables or secrets management
+# This section documents required environment variables
+
+environment_variables:
+  # Database connections
+  DATABASE_URL: "${DATABASE_URL}"
+  REDIS_URL: "${REDIS_URL}"
+  MONGODB_URL: "${MONGODB_URL}"
+  
+  # AI service APIs
+  GEMINI_API_KEY: "${GEMINI_API_KEY}"
+  GEMINI_API_ENDPOINT: "${GEMINI_API_ENDPOINT}"
+  IMAGE_GEN4_API_KEY: "${IMAGE_GEN4_API_KEY}"
+  IMAGE_GEN4_ENDPOINT: "${IMAGE_GEN4_ENDPOINT}"
+  
+  # External services
+  CONTENT_ENGINE_ENDPOINT: "${CONTENT_ENGINE_ENDPOINT}"
+  CONTENT_ENGINE_TOKEN: "${CONTENT_ENGINE_TOKEN}"
+  SIGNALING_SERVER_URL: "${SIGNALING_SERVER_URL}"
+  
+  # Analytics and monitoring
+  CLICKHOUSE_ENDPOINT: "${CLICKHOUSE_ENDPOINT}"
+  GCP_PROJECT_ID: "${GCP_PROJECT_ID}"
+  
+  # Security and compliance
+  ENCRYPTION_KEY: "${ENCRYPTION_KEY}"
+  JWT_SECRET: "${JWT_SECRET}"
+  
+  # Third-party integrations
+  TURN_SERVER_1: "${TURN_SERVER_1}"
+  TURN_SERVER_2: "${TURN_SERVER_2}"
+
+# ===============================================
+# FEATURE FLAGS
+# ===============================================
+feature_flags:
+  # AI and ML features
+  ai_difficulty_adaptation: true
+  emotion_detection: false  # Requires parental consent
+  ai_generated_content: true
+  
+  # Multiplayer features  
+  multiplayer_enabled: true
+  tournaments: false  # Phase 3 feature
+  leaderboards: true
+  
+  # Advanced features
+  offline_mode: false  # Phase 3 feature
+  vr_support: false   # Future consideration
+  ar_support: false   # Future consideration
+  
+  # Developer features
+  debug_mode: false
+  performance_profiling: false
+  a_b_testing: true
+
+# ===============================================
+# VALIDATION SCHEMA
+# ===============================================
+# This section defines validation rules for the configuration
+# (Implementation would use JSON Schema or similar)
+
+validation:
+  required_fields:
+    - domain
+    - game_type
+    - template_config.base_template
+    - phaser_config.renderer
+    
+  constraints:
+    difficulty_range:
+      min: 1
+      max: 10
+    max_players:
+      min: 1
+      max: 8
+    target_age_range:
+      min: 5
+      max: 18
+      
+  dependencies:
+    multiplayer_enabled: ["networking.protocol"]
+    emotion_detection: ["privacy.parental_consent"]
+    ai_generated_content: ["models.base_generator", "models.editor"]

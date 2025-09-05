@@ -1,0 +1,452 @@
+# ===============================================
+# MULTIPLICATION RUNNER GAME CONFIGURATION
+# ===============================================
+# An endless runner game where students collect correct multiplication answers
+# while avoiding incorrect ones to master multiplication facts.
+
+domain: "educational_games"
+game_type: "math_runner"
+version: "1.2.0"
+company_name: "PupilTree.ai"
+environment: "production"
+
+# ===============================================
+# GAME DEFINITION
+# ===============================================
+game_definition:
+  name: "Multiplication Masters Runner"
+  description: "Race through magical worlds collecting correct multiplication answers while avoiding math traps!"
+  target_age_range: [8, 12]
+  subject: "mathematics"
+  topic: "multiplication"
+  difficulty_range: [1, 8]
+  estimated_play_time: 15  # minutes
+  
+  learning_objectives:
+    - "Master multiplication tables 2-12"
+    - "Improve mental math calculation speed"
+    - "Build automaticity in multiplication facts"
+    - "Develop number sense and pattern recognition"
+    
+  success_criteria:
+    accuracy_threshold: 0.80
+    speed_improvement: 0.25
+    engagement_duration: 900  # 15 minutes
+    mastery_indicator: "3_consecutive_perfect_rounds"
+
+# ===============================================
+# TEMPLATE CONFIGURATION
+# ===============================================
+template_config:
+  base_template: "endless_runner"
+  template_version: "3.1.0"
+  
+  # Visual theme and aesthetics
+  theme:
+    name: "enchanted_math_forest"
+    color_palette: ["#4CAF50", "#FFC107", "#2196F3", "#FF5722", "#9C27B0"]
+    art_style: "cartoon_2d"
+    
+  # Character configuration
+  character:
+    type: "ninja_mathematician"
+    name: "Calculus Cat"
+    abilities: ["double_jump", "dash", "shield"]
+    customization_unlocks: true
+    
+  # Environment settings
+  environment:
+    worlds:
+      - name: "Forest of Factors"
+        background: "mystical_forest"
+        obstacles: ["fallen_logs", "math_traps", "wrong_answer_pits"]
+        collectibles: ["multiplication_gems", "speed_boosts", "shields"]
+        
+      - name: "Mountain of Multiples"
+        background: "snowy_peaks"
+        obstacles: ["rolling_boulders", "ice_patches", "avalanche_zones"]
+        collectibles: ["golden_equations", "warm_up_potions"]
+        
+      - name: "Desert of Digits"
+        background: "sand_dunes"
+        obstacles: ["sandstorms", "quicksand", "mirage_distractions"]
+        collectibles: ["oasis_answers", "camel_companions"]
+  
+  # Game mechanics
+  mechanics:
+    movement:
+      base_speed: 250
+      max_speed: 450
+      acceleration: 100
+      jump_height: 400
+      double_jump_height: 300
+      
+    collections:
+      correct_answer_score: 100
+      speed_bonus_multiplier: 1.5
+      combo_chain_bonus: 50  # per consecutive correct answer
+      
+    obstacles:
+      wrong_answer_penalty: -50
+      collision_penalty: -25
+      invulnerability_time: 2.0  # seconds after hit
+      
+    power_ups:
+      shield_duration: 10
+      speed_boost_duration: 8
+      double_score_duration: 15
+
+# ===============================================
+# AI ASSET GENERATION
+# ===============================================
+asset_generation:
+  models:
+    base_generator:
+      name: "image_gen_4"
+      style_prompt: "child-friendly cartoon style with vibrant colors"
+      
+    editor:
+      name: "nano_banana"
+      enhancement_instructions: [
+        "Add magical sparkles and glow effects",
+        "Ensure high contrast for accessibility",
+        "Create smooth animation transitions"
+      ]
+  
+  character_assets:
+    ninja_cat:
+      base_prompt: "Adorable orange tabby cat wearing a blue ninja outfit, friendly expression, suitable for children ages 8-12"
+      animations:
+        idle: { frames: 4, duration: 1.0 }
+        running: { frames: 8, duration: 0.8 }
+        jumping: { frames: 6, duration: 0.6 }
+        celebrating: { frames: 10, duration: 2.0 }
+        hit: { frames: 4, duration: 0.5 }
+      dimensions: [64, 64]
+      
+  environment_assets:
+    forest_background:
+      base_prompt: "Magical forest with tall trees, floating mathematical symbols, child-friendly cartoon style"
+      layers: ["sky", "background_trees", "midground_elements", "foreground_details"]
+      parallax_speed: [0.1, 0.3, 0.6, 1.0]
+      dimensions: [2048, 1024]
+      
+  collectible_assets:
+    multiplication_gems:
+      base_prompt: "Sparkling gems with multiplication symbols inside, magical aura, cartoon style"
+      variations: ["ruby_2x", "emerald_3x", "sapphire_4x", "diamond_5x"]
+      animation: "gentle_float_with_sparkles"
+      dimensions: [32, 32]
+
+# ===============================================
+# CONTENT GENERATION
+# ===============================================
+content_generation:
+  curriculum_alignment:
+    standards:
+      - name: "NCERT Grade 4"
+        chapter: "Multiplication Tables"
+        topics: ["2x to 12x tables", "Skip counting", "Array patterns"]
+      - name: "Common Core 4.NBT.B.5"
+        description: "Multiply whole numbers up to four digits by one-digit numbers"
+        
+  problem_generation:
+    categories:
+      - type: "basic_facts"
+        weight: 0.5
+        format: "{a} × {b} = ?"
+        ranges: { a: [2, 12], b: [2, 12] }
+        
+      - type: "word_problems"
+        weight: 0.3
+        templates: [
+          "{quantity} groups of {items} = {answer}",
+          "{person} has {groups} boxes with {per_box} items each",
+          "A {shape} has {sides} equal sides of {length} units"
+        ]
+        
+      - type: "pattern_recognition"
+        weight: 0.2
+        formats: ["skip_counting", "multiplication_sequences", "factor_pairs"]
+        
+  adaptive_content:
+    difficulty_progression:
+      level_1: { tables: [2, 5, 10], max_product: 50 }
+      level_2: { tables: [3, 4, 6], max_product: 72 }
+      level_3: { tables: [7, 8, 9], max_product: 108 }
+      level_4: { tables: [11, 12], max_product: 144 }
+      
+    mistake_remediation:
+      common_errors: [
+        { error: "confusing_6x7_and_6x8", remediation: "visual_array_practice" },
+        { error: "skip_counting_mistakes", remediation: "rhythm_based_practice" },
+        { error: "larger_table_confusion", remediation: "break_down_strategy" }
+      ]
+
+# ===============================================
+# AI ORCHESTRATION
+# ===============================================
+ai_orchestration:
+  workflow:
+    name: "multiplication_mastery_orchestrator"
+    
+    nodes:
+      - name: "difficulty_assessor"
+        model: "gemini_flash"
+        system_prompt: |
+          You are analyzing a student's multiplication performance in an endless runner game.
+          
+          Consider these factors:
+          - Current accuracy rate and response time
+          - Which multiplication tables they're struggling with
+          - Engagement level and frustration indicators
+          - Progress toward automaticity (instant recall)
+          
+          Suggest difficulty adjustments to maintain optimal challenge level.
+        
+      - name: "content_selector"
+        model: "gemini_flash"
+        system_prompt: |
+          Select the most appropriate multiplication problems for this student based on:
+          - Their mastery level of different multiplication tables
+          - Recent mistake patterns 
+          - Need for review vs. new learning
+          - Game pacing requirements (problems should flow naturally)
+          
+      - name: "hint_generator"
+        model: "gemini_pro"
+        system_prompt: |
+          Generate helpful hints for multiplication problems using these pedagogical approaches:
+          1. Visual/conceptual hints (arrays, groups, skip counting)
+          2. Strategy hints (known facts, doubling, near squares)
+          3. Pattern recognition hints (relationship to other facts)
+          
+          Keep hints age-appropriate and encouraging for 8-12 year olds.
+          
+  performance_tracking:
+    key_metrics:
+      - "facts_per_minute"
+      - "accuracy_by_table"
+      - "response_time_trends"
+      - "mistake_categories"
+      - "help_seeking_behavior"
+
+# ===============================================
+# PHASER.JS CONFIGURATION
+# ===============================================
+phaser_config:
+  renderer:
+    type: "AUTO"
+    width: 1024
+    height: 768
+    pixel_art: false
+    antialias: true
+    
+  scenes:
+    - key: "PreloaderScene"
+      file: "scenes/PreloaderScene.js"
+      
+    - key: "MainMenuScene"
+      file: "scenes/MainMenuScene.js"
+      background: "forest_menu_bg"
+      music: "adventure_theme"
+      
+    - key: "CharacterSelectScene"
+      file: "scenes/CharacterSelectScene.js"
+      unlockables: true
+      
+    - key: "GameplayScene"
+      file: "scenes/GameplayScene.js"
+      physics: "arcade"
+      world_bounds: { width: 2048, height: 768 }
+      
+    - key: "PauseScene"
+      file: "scenes/PauseScene.js"
+      modal: true
+      
+    - key: "GameOverScene"
+      file: "scenes/GameOverScene.js"
+      statistics: ["score", "accuracy", "problems_solved", "combo_max"]
+      
+  physics:
+    default: "arcade"
+    arcade:
+      gravity: { y: 600 }
+      debug: false
+      bounds: { x: 0, y: 0, width: 2048, height: 768 }
+      
+  audio:
+    background_music:
+      - key: "adventure_theme"
+        file: "audio/adventure_theme.ogg"
+        loop: true
+        volume: 0.6
+        
+    sound_effects:
+      - key: "correct_answer"
+        file: "audio/correct_chime.ogg"
+        volume: 0.8
+      - key: "wrong_answer"
+        file: "audio/wrong_buzz.ogg"
+        volume: 0.6
+      - key: "jump"
+        file: "audio/jump_sound.ogg"
+        volume: 0.7
+      - key: "power_up"
+        file: "audio/power_up.ogg"
+        volume: 0.9
+
+# ===============================================
+# GAMEPLAY BALANCING
+# ===============================================
+game_balance:
+  progression:
+    xp_per_correct: 10
+    xp_per_combo: 5
+    level_up_threshold: 100
+    
+  rewards:
+    coins_per_correct: 5
+    bonus_multiplier_max: 5.0
+    
+    unlockables:
+      - type: "character_skin"
+        requirement: "50_perfect_problems"
+        reward: "golden_ninja_cat"
+      - type: "trail_effect"
+        requirement: "100_combo_chain"
+        reward: "rainbow_trail"
+      - type: "world_unlock"
+        requirement: "master_2x_through_5x"
+        reward: "mountain_world"
+        
+  difficulty_scaling:
+    spawn_rate_increase: 0.05  # per level
+    speed_increase: 10  # pixels per second per level
+    problem_complexity_increase: 0.1  # per level
+
+# ===============================================
+# ACCESSIBILITY FEATURES
+# ===============================================
+accessibility:
+  visual:
+    high_contrast_mode: true
+    colorblind_friendly_palette: true
+    scalable_ui: { min: 0.8, max: 1.5 }
+    
+  audio:
+    problem_narration: true
+    sound_cues_for_collectibles: true
+    music_toggle: true
+    
+  motor:
+    alternative_controls: ["keyboard_only", "single_button", "switch_adapted"]
+    adjustable_timing: true
+    pause_anywhere: true
+    
+  cognitive:
+    simplified_ui_mode: true
+    extra_thinking_time: true
+    hint_availability: "always_available"
+
+# ===============================================
+# ASSESSMENT INTEGRATION
+# ===============================================
+assessment_integration:
+  # Integration with PupilAssess for gap detection
+  gap_detection:
+    input_format: "pupil_assess_json"
+    supported_gap_types: [
+      "multiplication_facts_automaticity",
+      "specific_table_weaknesses", 
+      "word_problem_interpretation",
+      "mental_math_strategies"
+    ]
+    
+  # Progress reporting back to PupilAssess
+  progress_reporting:
+    frequency: "real_time"
+    metrics: [
+      "problems_attempted",
+      "accuracy_by_difficulty",
+      "time_per_problem_type",
+      "improvement_trends",
+      "mastery_indicators"
+    ]
+    
+  # Adaptive difficulty based on assessment data
+  adaptive_targeting:
+    initial_placement: "assessment_based"
+    ongoing_adjustment: "performance_based"
+    remediation_triggers: ["accuracy_below_70", "repeated_mistakes"]
+
+# ===============================================
+# FEATURE FLAGS
+# ===============================================
+feature_flags:
+  # Core features
+  power_ups_enabled: true
+  character_customization: true
+  world_progression: true
+  
+  # Advanced features
+  multiplayer_mode: false  # Available in multiplayer_games examples
+  leaderboards: true
+  achievements: true
+  
+  # Experimental features
+  voice_commands: false
+  gesture_controls: false
+  ar_mode: false
+
+# ===============================================
+# LOCALIZATION
+# ===============================================
+localization:
+  supported_languages: ["en", "es", "hi", "bn"]
+  
+  text_keys:
+    ui:
+      play_button: "Play"
+      pause_button: "Pause"  
+      score_label: "Score"
+      accuracy_label: "Accuracy"
+      
+    gameplay:
+      correct_feedback: "Excellent!"
+      incorrect_feedback: "Try again!"
+      combo_message: "Amazing combo!"
+      level_complete: "Level Complete!"
+      
+    educational:
+      hint_prompt: "Need a hint?"
+      explanation_intro: "Here's why:"
+      mastery_celebration: "You've mastered this skill!"
+
+# ===============================================
+# TESTING SCENARIOS
+# ===============================================
+testing_scenarios:
+  unit_tests:
+    - "Problem generation accuracy"
+    - "Difficulty progression logic" 
+    - "Score calculation correctness"
+    - "Collision detection precision"
+    
+  integration_tests:
+    - "PupilAssess data ingestion"
+    - "Content Engine API calls"
+    - "Analytics data pipeline"
+    - "Asset loading performance"
+    
+  user_acceptance_tests:
+    - "8-year-old can complete tutorial"
+    - "12-year-old finds appropriate challenge"
+    - "Teacher can interpret progress reports"
+    - "Parent can understand safety features"
+    
+  performance_benchmarks:
+    - load_time: "< 3 seconds on 4G"
+    - frame_rate: "> 55 FPS on mid-range devices"
+    - memory_usage: "< 150MB peak"
+    - battery_impact: "< 5% per 15-minute session"

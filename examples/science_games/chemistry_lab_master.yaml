@@ -1,0 +1,502 @@
+# ===============================================
+# CHEMISTRY LAB MASTER GAME CONFIGURATION
+# ===============================================
+# A virtual laboratory simulation where students conduct safe chemistry experiments,
+# learn scientific method, and discover the wonders of molecular interactions.
+
+domain: "educational_games"
+game_type: "simulation_lab_experiment"
+version: "3.0.0"
+company_name: "PupilTree.ai"
+environment: "production"
+
+# ===============================================
+# GAME DEFINITION
+# ===============================================
+game_definition:
+  name: "Chemistry Lab Master: Molecular Adventures"
+  description: "Step into a state-of-the-art virtual chemistry laboratory! Conduct safe experiments, discover reactions, and unlock the secrets of the molecular world through hands-on scientific exploration."
+  target_age_range: [10, 16]
+  subject: "chemistry"
+  topic: "basic_chemistry_principles"
+  difficulty_range: [1, 12]
+  estimated_play_time: 30  # minutes per experiment session
+  
+  learning_objectives:
+    - "Understand basic chemistry concepts (atoms, molecules, reactions)"
+    - "Practice scientific method and experimental design"
+    - "Learn laboratory safety procedures and protocols"
+    - "Explore chemical properties and periodic table relationships"
+    - "Develop observation, hypothesis formation, and conclusion drawing skills"
+    - "Build understanding of conservation of mass and energy"
+    
+  success_criteria:
+    experiment_completion_accuracy: 0.80
+    safety_protocol_adherence: 1.00  # Must be perfect for safety
+    hypothesis_formation_improvement: 0.70
+    scientific_vocabulary_acquisition: 0.75
+    conceptual_understanding: 0.80
+    mastery_indicator: "complete_5_experiments_with_accurate_predictions"
+
+# ===============================================
+# TEMPLATE CONFIGURATION
+# ===============================================
+template_config:
+  base_template: "interactive_simulation"
+  template_version: "5.1.0"
+  
+  # Laboratory environment design
+  theme:
+    name: "modern_chemistry_laboratory"
+    color_palette: ["#2C3E50", "#3498DB", "#E74C3C", "#F39C12", "#27AE60", "#FFFFFF"]
+    art_style: "realistic_scientific"
+    lighting: "laboratory_bright_with_safety_highlights"
+    
+  # Virtual laboratory setup
+  laboratory:
+    type: "fully_equipped_chemistry_lab"
+    safety_level: "educational_safe_simulation"
+    equipment_realism: "high_fidelity_virtual_replicas"
+    
+  # Character system
+  character:
+    type: "young_scientist_avatar"
+    name: "Dr. Alex Molecule"
+    role: "laboratory_assistant_and_guide"
+    personality: "enthusiastic_safety_conscious_educator"
+    customization: ["lab_coats", "safety_goggles", "gloves", "badges"]
+    
+  # Laboratory environments
+  lab_stations:
+    - name: "Basic Chemistry Station"
+      equipment: ["beakers", "test_tubes", "stirring_rods", "pH_strips", "thermometer"]
+      experiments: ["acid_base_reactions", "crystallization", "solubility_tests"]
+      safety_level: "beginner"
+      
+    - name: "Advanced Synthesis Station" 
+      equipment: ["round_bottom_flasks", "heating_mantles", "condensers", "separatory_funnels"]
+      experiments: ["organic_synthesis", "distillation", "extraction_procedures"]
+      safety_level: "intermediate"
+      
+    - name: "Analytical Chemistry Station"
+      equipment: ["spectrophotometer", "pH_meter", "analytical_balance", "titration_setup"]
+      experiments: ["quantitative_analysis", "spectroscopy", "chromatography"]
+      safety_level: "advanced"
+      
+    - name: "Physical Chemistry Station"
+      equipment: ["calorimeter", "pressure_vessels", "gas_collection_apparatus"]
+      experiments: ["thermodynamics", "gas_laws", "reaction_kinetics"]
+      safety_level: "advanced"
+
+# ===============================================
+# AI ASSET GENERATION
+# ===============================================
+asset_generation:
+  models:
+    base_generator:
+      name: "image_gen_4"
+      style_prompt: "photorealistic modern chemistry laboratory with accurate scientific equipment, bright clean lighting, safety-focused design"
+      
+    editor:
+      name: "nano_banana"
+      enhancement_instructions: [
+        "Ensure all laboratory equipment is scientifically accurate",
+        "Add subtle animation effects for chemical reactions",
+        "Highlight safety equipment and protocols clearly",
+        "Create clear visual feedback for successful experiments",
+        "Maintain educational realism while being engaging"
+      ]
+  
+  laboratory_assets:
+    equipment_models:
+      base_prompt: "Highly accurate 3D models of chemistry laboratory equipment: {equipment_name}, modern design, educational quality, safety features visible"
+      equipment_list: [
+        "beakers_various_sizes", "erlenmeyer_flasks", "test_tubes", "graduated_cylinders",
+        "bunsen_burner", "hot_plate_stirrer", "analytical_balance", "pH_meter",
+        "fume_hood", "safety_shower", "fire_extinguisher", "first_aid_station"
+      ]
+      detail_level: "high_educational_accuracy"
+      dimensions: { small: [64, 64], medium: [128, 128], large: [256, 256] }
+      
+    chemical_representations:
+      base_prompt: "Clear, educational representations of chemical substances and reactions with accurate molecular models"
+      types: ["molecular_models", "reaction_equations", "ph_indicators", "crystalline_structures"]
+      safety_coding: "color_coded_hazard_levels"
+      animations: ["molecular_motion", "reaction_progression", "state_changes"]
+      
+    character_assets:
+      scientist_avatar:
+        base_prompt: "Friendly young scientist in proper laboratory attire, diverse representation, educational role model, enthusiastic expression"
+        safety_gear: ["lab_coat", "safety_goggles", "nitrile_gloves", "closed_toe_shoes"]
+        animations: {
+          demonstrating: { frames: 12, duration: 3.0 },
+          safety_check: { frames: 8, duration: 2.0 },
+          celebrating_discovery: { frames: 10, duration: 2.5 },
+          thinking_scientifically: { frames: 6, duration: 3.0 }
+        }
+        dimensions: [128, 256]
+
+# ===============================================
+# EXPERIMENT CONTENT SYSTEM
+# ===============================================
+experiment_catalog:
+  curriculum_alignment:
+    standards:
+      - name: "Next Generation Science Standards (NGSS)"
+        grades: [6, 7, 8, 9, 10, 11, 12]
+        standards: ["MS-PS1-2", "HS-PS1-1", "HS-PS1-2", "HS-PS1-7"]
+      - name: "National Science Education Standards"
+        focus: ["Physical Science", "Science as Inquiry", "Science and Technology"]
+        
+  experiment_categories:
+    beginner_chemistry:
+      grade_level: [6, 8]
+      complexity: "basic_concepts"
+      safety_level: "minimal_risk"
+      experiments:
+        - name: "Acid-Base Rainbow"
+          objective: "Learn about pH scale and indicators"
+          materials: ["cabbage_juice", "household_acids_bases", "test_tubes"]
+          procedure_steps: 7
+          expected_outcome: "color_changes_across_pH_spectrum"
+          learning_concepts: ["pH_scale", "acids_bases", "chemical_indicators"]
+          
+        - name: "Crystal Garden Growth"
+          objective: "Understand crystallization and solubility"
+          materials: ["salt_solutions", "string", "magnifying_glass"]
+          procedure_steps: 5
+          expected_outcome: "crystal_formation_over_time"
+          learning_concepts: ["crystallization", "solubility", "patience_in_science"]
+          
+        - name: "Volcano Eruption Chemistry"
+          objective: "Explore gas-producing reactions"
+          materials: ["baking_soda", "vinegar", "food_coloring", "dish_soap"]
+          procedure_steps: 4
+          expected_outcome: "dramatic_fizzing_reaction"
+          learning_concepts: ["chemical_reactions", "gas_production", "reactants_products"]
+    
+    intermediate_chemistry:
+      grade_level: [9, 11]
+      complexity: "multi_step_procedures"
+      safety_level: "moderate_precautions"
+      experiments:
+        - name: "Synthesis of Aspirin"
+          objective: "Learn organic synthesis principles"
+          materials: ["salicylic_acid", "acetic_anhydride", "catalyst", "purification_materials"]
+          procedure_steps: 12
+          expected_outcome: "pure_aspirin_crystals"
+          learning_concepts: ["organic_synthesis", "purification", "yield_calculations"]
+          
+        - name: "Electrochemical Cell Construction"
+          objective: "Understand redox reactions and electricity"
+          materials: ["electrodes", "salt_bridge", "voltmeter", "solutions"]
+          procedure_steps: 8
+          expected_outcome: "functioning_battery"
+          learning_concepts: ["redox_reactions", "electrochemistry", "energy_conversion"]
+    
+    advanced_chemistry:
+      grade_level: [11, 12]
+      complexity: "research_level_concepts"
+      safety_level: "advanced_protocols"
+      experiments:
+        - name: "Spectroscopic Analysis"
+          objective: "Identify unknown compounds using spectroscopy"
+          materials: ["unknown_samples", "spectrophotometer", "reference_database"]
+          procedure_steps: 15
+          expected_outcome: "compound_identification"
+          learning_concepts: ["spectroscopy", "analytical_chemistry", "molecular_structure"]
+
+# ===============================================
+# AI ORCHESTRATION
+# ===============================================
+ai_orchestration:
+  workflow:
+    name: "chemistry_learning_orchestrator"
+    
+    nodes:
+      - name: "experiment_selector"
+        model: "gemini_pro"
+        system_prompt: |
+          You are an expert chemistry educator selecting optimal experiments for students.
+          
+          Consider:
+          - Student's current chemistry knowledge level
+          - Previous experiment performance and understanding
+          - Curriculum alignment requirements
+          - Safety considerations and laboratory readiness
+          - Interest areas and engagement patterns
+          
+          Select experiments that build conceptual understanding progressively while maintaining safety standards.
+          
+      - name: "safety_monitor"
+        model: "gemini_flash"
+        system_prompt: |
+          You are a laboratory safety specialist ensuring all virtual experiments follow proper safety protocols.
+          
+          Continuously monitor for:
+          - Proper personal protective equipment usage
+          - Correct procedure sequence following
+          - Hazard awareness and precaution taking
+          - Emergency procedure knowledge
+          - Chemical compatibility and storage
+          
+          Intervene immediately if safety protocols are not followed.
+          
+      - name: "hypothesis_guide"
+        model: "gemini_pro"
+        system_prompt: |
+          You are a scientific method expert helping students develop strong hypothesis formation skills.
+          
+          Guide students to:
+          - Make observations and ask scientific questions
+          - Form testable hypotheses based on prior knowledge
+          - Design controlled experiments to test predictions
+          - Collect and analyze data systematically
+          - Draw evidence-based conclusions
+          
+          Use Socratic questioning to develop scientific thinking.
+          
+      - name: "concept_connector"
+        model: "gemini_pro"
+        system_prompt: |
+          You are a chemistry concept integration specialist connecting experimental observations to theoretical understanding.
+          
+          Help students:
+          - Connect observations to underlying chemical principles
+          - Relate experiments to real-world applications
+          - Build conceptual frameworks linking related topics
+          - Develop scientific vocabulary in context
+          - See patterns across different types of reactions
+          
+  adaptive_features:
+    difficulty_progression:
+      factors: ["experimental_accuracy", "procedure_completion", "safety_compliance", "conceptual_understanding"]
+      adjustments: ["complexity_level", "guidance_amount", "procedure_detail", "analysis_depth"]
+      
+    personalization:
+      learning_style_accommodation: ["visual_learners", "kinesthetic_learners", "analytical_thinkers"]
+      interest_integration: ["medical_applications", "environmental_chemistry", "materials_science"]
+      pacing_adaptation: "self_directed_with_scaffolding"
+
+# ===============================================
+# PHASER.JS LABORATORY SIMULATION
+# ===============================================
+phaser_config:
+  renderer:
+    type: "WEBGL"  # Required for 3D-like effects and realistic simulations
+    width: 1280
+    height: 720
+    antialias: true
+    pixel_art: false
+    
+  scenes:
+    - key: "LaboratoryOrientationScene"
+      file: "scenes/LaboratoryOrientationScene.js"
+      content: "safety_training_and_equipment_familiarization"
+      
+    - key: "ExperimentSelectionScene"
+      file: "scenes/ExperimentSelectionScene.js"
+      layout: "virtual_laboratory_overview"
+      interaction: "station_selection_and_experiment_browsing"
+      
+    - key: "ExperimentSetupScene"
+      file: "scenes/ExperimentSetupScene.js"
+      mechanics: ["equipment_selection", "material_preparation", "safety_checklist"]
+      
+    - key: "ActiveExperimentScene"
+      file: "scenes/ActiveExperimentScene.js"
+      simulation: "real_time_chemical_reactions"
+      interactions: ["drag_drop_equipment", "precise_measurements", "procedure_following"]
+      
+    - key: "DataAnalysisScene"
+      file: "scenes/DataAnalysisScene.js"
+      tools: ["graphing", "calculations", "pattern_recognition"]
+      
+    - key: "ConclusionReportScene"
+      file: "scenes/ConclusionReportScene.js"
+      activities: ["hypothesis_evaluation", "conclusion_writing", "application_connections"]
+      
+  physics:
+    default: "matter"  # More realistic for laboratory simulations
+    matter:
+      gravity: { y: 0.8 }  # Realistic but not overwhelming
+      debug: false
+      
+  interaction_systems:
+    precision_controls:
+      enabled: true
+      measurement_tools: ["graduated_cylinder_reading", "balance_precision", "thermometer_accuracy"]
+      feedback: "real_time_measurement_validation"
+      
+    equipment_simulation:
+      realistic_behavior: true
+      safety_constraints: "prevent_dangerous_combinations"
+      visual_feedback: "immediate_reaction_indication"
+
+# ===============================================
+# SAFETY PROTOCOLS
+# ===============================================
+laboratory_safety:
+  virtual_safety_training:
+    mandatory_completion: true
+    topics: [
+      "personal_protective_equipment",
+      "chemical_hazard_identification", 
+      "emergency_procedures",
+      "proper_waste_disposal",
+      "equipment_handling",
+      "accident_reporting"
+    ]
+    assessment: "100_percent_required_for_lab_access"
+    
+  real_time_safety_monitoring:
+    ppe_compliance: "continuous_visual_verification"
+    procedure_adherence: "step_by_step_validation"
+    hazard_warnings: "proactive_safety_alerts"
+    emergency_simulation: "practice_emergency_responses"
+    
+  safety_gamification:
+    safety_points: "reward_perfect_safety_compliance"
+    safety_badges: ["PPE_champion", "procedure_perfectionist", "safety_leader"]
+    safety_streaks: "consecutive_safe_experiment_tracking"
+    
+  parental_safety_assurance:
+    virtual_only_guarantee: "no_physical_chemicals_or_equipment_needed"
+    educational_focus: "learning_without_physical_risk"
+    safety_reporting: "safety_compliance_in_progress_reports"
+
+# ===============================================
+# SCIENTIFIC METHOD INTEGRATION
+# ===============================================
+scientific_method:
+  structured_approach:
+    observation_phase:
+      activities: ["phenomenon_observation", "question_formulation", "background_research"]
+      tools: ["observation_journal", "research_database", "peer_discussion"]
+      
+    hypothesis_phase:
+      activities: ["prediction_making", "variable_identification", "testable_statement_creation"]
+      scaffolds: ["hypothesis_templates", "if_then_because_structure", "peer_review"]
+      
+    experimentation_phase:
+      activities: ["controlled_experiment_design", "data_collection", "procedure_execution"]
+      controls: ["variable_control", "multiple_trials", "standardized_procedures"]
+      
+    analysis_phase:
+      activities: ["data_interpretation", "pattern_identification", "statistical_analysis"]
+      tools: ["graphing_calculator", "spreadsheet_integration", "visualization_tools"]
+      
+    conclusion_phase:
+      activities: ["hypothesis_evaluation", "limitation_acknowledgment", "future_research_suggestions"]
+      formats: ["scientific_report", "peer_presentation", "visual_summary"]
+      
+  metacognitive_development:
+    reflection_prompts: "what_did_you_learn_how_do_you_know"
+    process_awareness: "thinking_about_thinking_in_science"
+    error_analysis: "learning_from_unexpected_results"
+
+# ===============================================
+# ASSESSMENT AND ANALYTICS
+# ===============================================
+assessment_integration:
+  formative_assessment:
+    embedded_checkpoints: "invisible_knowledge_probes_during_experiments"
+    real_time_feedback: "immediate_correction_and_guidance"
+    peer_assessment: "collaborative_experiment_evaluation"
+    
+  summative_assessment:
+    laboratory_practicals: "comprehensive_experiment_demonstrations"
+    conceptual_understanding: "application_of_principles_to_new_situations"
+    scientific_communication: "clear_explanation_of_results_and_reasoning"
+    
+  analytics_dashboard:
+    student_progress:
+      metrics: ["experiments_completed", "concepts_mastered", "safety_compliance", "scientific_reasoning_growth"]
+      visualizations: ["progress_pathways", "concept_maps", "achievement_timelines"]
+      
+    teacher_insights:
+      class_overview: ["common_misconceptions", "engagement_patterns", "concept_difficulty_analysis"]
+      individual_support: ["intervention_recommendations", "strength_identification", "next_steps_guidance"]
+      
+    curriculum_alignment:
+      standards_tracking: "automatic_standards_alignment_reporting"
+      learning_objective_progress: "mastery_indicator_monitoring"
+      assessment_preparation: "summative_assessment_readiness_indicators"
+
+# ===============================================
+# COLLABORATIVE FEATURES
+# ===============================================
+collaborative_learning:
+  virtual_lab_partners:
+    peer_collaboration: "shared_virtual_laboratory_spaces"
+    role_distribution: ["lead_experimenter", "data_recorder", "safety_monitor", "hypothesis_developer"]
+    communication_tools: ["voice_chat", "shared_notes", "collaborative_whiteboards"]
+    
+  scientific_community:
+    experiment_sharing: "publish_successful_experiments_to_class_database"
+    peer_review_process: "students_review_and_validate_peer_experiments"
+    research_presentations: "virtual_science_fair_presentations"
+    
+  teacher_facilitation:
+    guided_discovery: "teacher_led_virtual_laboratory_tours"
+    differentiated_instruction: "adaptive_grouping_based_on_skill_level"
+    classroom_discussions: "whole_class_experiment_debriefing_sessions"
+
+# ===============================================
+# REAL-WORLD CONNECTIONS
+# ===============================================
+real_world_applications:
+  career_connections:
+    scientist_profiles: ["research_chemist", "pharmacist", "environmental_scientist", "materials_engineer"]
+    day_in_the_life: "virtual_job_shadowing_experiences"
+    industry_applications: ["pharmaceutical_development", "environmental_cleanup", "materials_innovation"]
+    
+  current_research:
+    cutting_edge_science: "age_appropriate_current_research_connections"
+    sustainability_focus: "green_chemistry_principles_and_applications"
+    health_connections: "chemistry_in_medicine_and_nutrition"
+    
+  citizen_science:
+    community_projects: "local_environmental_chemistry_monitoring"
+    data_contribution: "contribute_to_real_scientific_databases"
+    social_responsibility: "chemistry_for_social_good_projects"
+
+# ===============================================
+# ACCESSIBILITY AND INCLUSION
+# ===============================================
+accessibility:
+  physical_accessibility:
+    motor_accommodations: ["alternative_input_methods", "adjustable_timing", "simplified_interactions"]
+    visual_accessibility: ["high_contrast_mode", "screen_reader_compatibility", "zoom_functionality"]
+    auditory_accessibility: ["visual_captions", "sound_alternatives", "adjustable_audio"]
+    
+  cognitive_accessibility:
+    learning_differences: ["dyslexia_friendly_fonts", "attention_support_tools", "processing_time_adjustments"]
+    memory_support: ["procedure_checklists", "visual_reminders", "progress_tracking"]
+    language_support: ["multilingual_options", "vocabulary_support", "simplified_language_modes"]
+    
+  cultural_inclusivity:
+    diverse_representation: "scientists_from_all_backgrounds_and_cultures"
+    culturally_relevant_examples: "chemistry_applications_from_diverse_cultures"
+    inclusive_language: "gender_neutral_and_culturally_sensitive_terminology"
+
+# ===============================================
+# DEPLOYMENT AND TECHNICAL REQUIREMENTS
+# ===============================================
+deployment:
+  platform_compatibility: ["web_browsers", "tablets", "chromebooks", "interactive_whiteboards"]
+  
+  performance_specifications:
+    minimum_requirements: "2GB_RAM_modern_browser_stable_internet"
+    optimal_experience: "4GB_RAM_dedicated_graphics_high_speed_internet"
+    offline_capability: "core_experiments_available_offline"
+    
+  integration_options:
+    learning_management_systems: ["Google_Classroom", "Canvas", "Schoology", "Blackboard"]
+    gradebook_integration: "automatic_progress_and_assessment_syncing"
+    single_sign_on: "seamless_authentication_through_school_systems"
+    
+  security_and_privacy:
+    student_data_protection: "FERPA_COPPA_GDPR_compliant"
+    secure_communications: "encrypted_data_transmission"
+    minimal_data_collection: "only_educational_progress_data_collected"

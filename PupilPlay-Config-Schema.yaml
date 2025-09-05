@@ -174,61 +174,152 @@ content_generation:
         description: "Suggest solving strategy"
 
 # ===============================================
-# ADAPTIVE INTELLIGENCE CONFIGURATION
+# LANGGRAPH TWO-NODE ORCHESTRATION
 # ===============================================
-ai_orchestration:
-  # LangGraph workflow definition
+langgraph_orchestration:
+  # Static two-node workflow (NEVER changes - all logic in configuration)
   workflow:
-    name: "adaptive_game_orchestrator"
+    name: "pupilplay_universal_game_engine"
     version: "1.0"
+    architecture: "two_node_static"
     
-    nodes:
-      - name: "difficulty_assessor"
-        type: "ai_node"
-        model: "gemini_flash"
-        system_prompt: |
-          You are an expert educational game difficulty assessor. 
-          Analyze the student's performance data and determine optimal difficulty adjustments.
-          Consider accuracy, response time, frustration indicators, and engagement metrics.
-        tools: ["calculate_elo", "analyze_performance_trends"]
+    # Node 1: Game Master (Educational AI Assistant) - replaces Assistant Node
+    game_master_node:
+      description: "Universal educational AI tutor embedded in game interactions"
+      
+      # Model selection strategy (same as automation engine)
+      model_selection:
+        primary: "gemini_pro"      # Complex educational interactions, detailed explanations
+        fallback: "gemini_flash"   # Quick feedback, simple hints, routine interactions
+        selection_criteria: "educational_complexity_scoring"
+        circuit_breaker:
+          failure_threshold: 3
+          recovery_timeout: 60
+          
+      # All educational expertise lives in system prompt (configuration-driven)
+      system_prompt_template: |
+        You are an expert {subject} educator embedded in the "{game_name}" educational game.
         
-      - name: "hint_generator"
-        type: "ai_node"
-        model: "gemini_pro"
-        system_prompt: |
-          You are a Socratic tutor specializing in mathematics education.
-          Generate progressive hints that guide students to discover answers themselves.
-          Use age-appropriate language and encourage mathematical thinking.
-        tools: ["get_curriculum_context", "generate_visual_aids"]
+        Your role is to provide personalized educational support to {player_name}, age {player_age}.
         
-      - name: "engagement_monitor"
-        type: "ai_node"
-        model: "custom_emotion_classifier"
-        system_prompt: |
-          Monitor student engagement through interaction patterns and optional emotion detection.
-          Alert if frustration levels rise or engagement drops significantly.
-        tools: ["analyze_interaction_patterns", "detect_emotions"]
+        EDUCATIONAL CONTEXT:
+        - Subject: {subject}
+        - Current Topic: {current_topic}  
+        - Player Level: {current_level}
+        - Learning Objectives: {learning_objectives}
+        - Identified Gaps: {learning_gaps}
+        - Learning Style: {preferred_learning_style}
         
-      - name: "content_selector"
-        type: "ai_node"
-        model: "gemini_flash"
-        system_prompt: |
-          Select optimal learning content based on student profile and current performance.
-          Ensure curriculum alignment and progressive skill building.
-        tools: ["query_content_engine", "check_prerequisites"]
+        CURRENT GAME STATE:
+        - Game Type: {game_type}
+        - Difficulty Level: {difficulty_level}
+        - Recent Performance: {recent_accuracy}% accuracy, {problems_per_minute} problems/minute
+        - Engagement Score: {engagement_score}
+        - Session Time: {session_duration} minutes
+        
+        AVAILABLE GAME ACTIONS:
+        {available_game_actions}
+        
+        EDUCATIONAL PHILOSOPHY:
+        - Use Socratic questioning to guide discovery, never just give answers
+        - Provide immediate, specific feedback on learning progress
+        - Maintain optimal challenge level for flow state
+        - Celebrate effort and progress, not just correct answers
+        - Connect abstract concepts to concrete, visual representations
+        - Adapt teaching style to individual learner needs
+        
+        COMMUNICATION GUIDELINES:
+        - Age-appropriate vocabulary for {target_age_range} year olds
+        - Encouraging and supportive tone
+        - Focus on mathematical/scientific/logical thinking processes
+        - Use game metaphors and terminology naturally
+        - Provide hints that guide thinking, not direct answers
+        
+        Remember: Every interaction should build both subject mastery AND confidence!
+        
+    # Node 2: Game Actions (Real-World Integration Hub) - replaces Tools Node
+    game_actions_node:
+      description: "Execute educational decisions in the real game world"
+      execution_pattern: "langgraph_tools_pattern"  # Same as automation engine
+      
+      # Educational Tools (equivalent to MCP tools in automation engine)
+      educational_tools:
+        - name: "adjust_difficulty"
+          description: "Real-time challenge level calibration based on performance"
+          parameters: ["new_difficulty_level", "adjustment_rationale", "transition_smoothness"]
+          
+        - name: "generate_hint" 
+          description: "Context-aware educational hint generation"
+          parameters: ["hint_type", "visual_support", "complexity_level", "learning_style_adaptation"]
+          
+        - name: "create_educational_content"
+          description: "Dynamic problem/scenario generation aligned with curriculum"
+          parameters: ["content_type", "difficulty_level", "learning_objectives", "student_interests"]
+          
+        - name: "assess_understanding"
+          description: "Invisible knowledge probing through gameplay interactions"
+          parameters: ["assessment_type", "skills_to_probe", "integration_method"]
+          
+        - name: "provide_explanation"
+          description: "Detailed concept clarification with multiple representation modes"
+          parameters: ["explanation_depth", "visual_aids", "real_world_connections"]
+          
+        - name: "track_learning_progress"
+          description: "Record educational outcomes and skill development"
+          parameters: ["skill_category", "mastery_level", "evidence_type", "standards_alignment"]
+      
+      # Game Mechanics Tools
+      game_mechanics_tools:
+        - name: "update_game_state"
+          description: "Modify player progress, achievements, and game elements"
+          parameters: ["state_category", "new_values", "animation_triggers"]
+          
+        - name: "trigger_celebration"
+          description: "Activate success animations and positive reinforcement"
+          parameters: ["celebration_type", "achievement_context", "personalization_elements"]
+          
+        - name: "manage_inventory"
+          description: "Handle educational rewards and power-ups"
+          parameters: ["item_type", "quantity_change", "unlock_conditions"]
+          
+        - name: "save_progress"
+          description: "Persistent storage of learning and game achievements"
+          parameters: ["checkpoint_type", "data_categories", "sync_external_systems"]
+      
+      # AI Asset Generation Tools
+      asset_generation_tools:
+        - name: "generate_visual_asset"
+          description: "Create educational graphics using Nano Banana + Image Gen 4 pipeline"
+          parameters: ["asset_type", "educational_context", "visual_specifications", "target_age_group"]
+          
+        - name: "create_character_variation"
+          description: "Generate personalized character appearances"
+          parameters: ["character_base", "customization_options", "achievement_reflections"]
+          
+        - name: "design_environment_element"
+          description: "Generate contextual educational environment assets"
+          parameters: ["environment_theme", "educational_integration", "interactive_elements"]
+      
+      # Analytics and Integration Tools
+      analytics_tools:
+        - name: "record_learning_interaction"
+          description: "Capture educational interaction data for analysis"
+          parameters: ["interaction_type", "learning_context", "outcome_metrics"]
+          
+        - name: "sync_external_systems"
+          description: "Coordinate with PupilAssess, Content Engine, LMS"
+          parameters: ["system_type", "data_payload", "sync_direction"]
+          
+        - name: "generate_insights"
+          description: "Analyze learning patterns and generate actionable insights"
+          parameters: ["analysis_timeframe", "focus_areas", "stakeholder_type"]
     
-    edges:
-      - from: "difficulty_assessor"
-        to: "content_selector"
-        condition: "difficulty_change_needed"
-        
-      - from: "engagement_monitor"
-        to: "hint_generator"
-        condition: "student_struggling"
-        
-      - from: "content_selector"
-        to: "hint_generator"
-        condition: "content_updated"
+    # Static workflow routing (identical to automation engine pattern)
+    routing_logic:
+      entry_point: "game_master"
+      conditional_routing: "langgraph_tools_condition"  # Built-in LangGraph condition
+      return_path: "always_return_to_game_master"
+      error_handling: "graceful_degradation_with_educational_continuity"
   
   # Adaptive difficulty algorithms
   difficulty_adaptation:
